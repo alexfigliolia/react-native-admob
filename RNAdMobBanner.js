@@ -23,6 +23,12 @@ class AdMobBanner extends Component {
   componentDidMount() {
     this.loadBanner();
   }
+  
+  componentWillUnmount() {
+    if(this.props.onUnmount) {
+      this.props.onUnmount();
+    }
+  }
 
   loadBanner() {
     UIManager.dispatchViewManagerCommand(
