@@ -5,7 +5,7 @@ import {
   findNodeHandle,
   ViewPropTypes,
 } from 'react-native';
-import { string, func, arrayOf, boolean } from 'prop-types';
+import { string, func, arrayOf } from 'prop-types';
 
 import { createErrorFromErrorData } from './utils';
 
@@ -21,9 +21,7 @@ class AdMobBanner extends Component {
   }
 
   componentDidMount() {
-    const { shouldRefresh, firstMount } = this.props;
-    if(shouldRefresh) this.loadBanner();
-    this.props.firstMount();
+    this.loadBanner();
   }
   
   componentWillUnmount() {
@@ -111,8 +109,6 @@ AdMobBanner.propTypes = {
   onAdOpened: func,
   onAdClosed: func,
   onAdLeftApplication: func,
-  shouldRefresh: boolean,
-  firstMount: func,
   unmount: func
 };
 
