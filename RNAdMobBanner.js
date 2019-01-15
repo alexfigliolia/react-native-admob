@@ -5,7 +5,7 @@ import {
   findNodeHandle,
   ViewPropTypes,
 } from 'react-native';
-import { string, func, arrayOf } from 'prop-types';
+import { string, func, arrayOf, boolean } from 'prop-types';
 
 import { createErrorFromErrorData } from './utils';
 
@@ -18,12 +18,12 @@ class AdMobBanner extends Component {
     this.state = {
       style: {},
     };
-    this.numMounts = 0;
   }
 
   componentDidMount() {
-    if(this.numMounts === 0) this.loadBanner();
-    this.numMounts++;
+    const { shouldRefresh, firstMount } = this.props;
+    if(firstMount) this.loadBanner();
+    this.props.firstMount();
   }
   
   componentWillUnmount() {
@@ -56,15 +56,13 @@ class AdMobBanner extends Component {
 
   render() {
     return (
-      this.props.mount ? 
-        <RNGADBannerView
-          {...this.props}
-          style={[this.props.style, this.state.style]}
-          onSizeChange={this.handleSizeChange}
-          onAdFailedToLoad={this.handleAdFailedToLoad}
-          ref={el => (this._bannerView = el)}
-        />
-      : null
+      <RNGADBannerView
+        {...this.props}
+        style={[this.props.style, this.state.style]}
+        onSizeChange={this.handleSizeChange}
+        onAdFailedToLoad={this.handleAdFailedToLoad}
+        ref={el => (this._bannerView = el)}
+      />
     );
   }
 }
@@ -113,8 +111,12 @@ AdMobBanner.propTypes = {
   onAdOpened: func,
   onAdClosed: func,
   onAdLeftApplication: func,
+  shouldRefresh: boolean,
+  firstMount: func,
+  unmount: func
 };
 
 const RNGADBannerView = requireNativeComponent('RNGADBannerView', AdMobBanner);
 
 export default AdMobBanner;
+
