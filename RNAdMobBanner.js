@@ -22,7 +22,7 @@ class AdMobBanner extends Component {
 
   componentDidMount() {
     const { shouldRefresh, firstMount } = this.props;
-    if(firstMount) this.loadBanner();
+    if(shouldRefresh) this.loadBanner();
     this.props.firstMount();
   }
   
@@ -119,4 +119,3 @@ AdMobBanner.propTypes = {
 const RNGADBannerView = requireNativeComponent('RNGADBannerView', AdMobBanner);
 
 export default AdMobBanner;
-
