@@ -18,10 +18,12 @@ class AdMobBanner extends Component {
     this.state = {
       style: {},
     };
+    this.numMounts = 0;
   }
 
   componentDidMount() {
-    this.loadBanner();
+    if(this.numMounts === 0) this.loadBanner();
+    this.numMounts++;
   }
   
   componentWillUnmount() {
@@ -54,13 +56,15 @@ class AdMobBanner extends Component {
 
   render() {
     return (
-      <RNGADBannerView
-        {...this.props}
-        style={[this.props.style, this.state.style]}
-        onSizeChange={this.handleSizeChange}
-        onAdFailedToLoad={this.handleAdFailedToLoad}
-        ref={el => (this._bannerView = el)}
-      />
+      this.props.mount ? 
+        <RNGADBannerView
+          {...this.props}
+          style={[this.props.style, this.state.style]}
+          onSizeChange={this.handleSizeChange}
+          onAdFailedToLoad={this.handleAdFailedToLoad}
+          ref={el => (this._bannerView = el)}
+        />
+      : null
     );
   }
 }
