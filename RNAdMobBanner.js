@@ -67,7 +67,7 @@ class AdMobBanner extends Component {
 
 Object.defineProperty(AdMobBanner, 'simulatorId', {
   get() {
-    return UIManager.RNGADBannerView.Constants.simulatorId;
+    return UIManager.getViewManagerConfig('RNGADBannerView').Constants.simulatorId;
   },
 });
 
